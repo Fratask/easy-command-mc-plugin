@@ -46,7 +46,7 @@ public class EasyCommandsPlugin {
         return CommandSpec.builder()
                 .description(Text.of("Setup gameMode"))
                 .arguments(
-                        GenericArguments.optional(GenericArguments.player(Text.of("player"))),
+                        GenericArguments.optionalWeak(GenericArguments.player(Text.of("player"))),
                         GenericArguments.onlyOne(GenericArguments.integer(Text.of("gameMode")))
                         )
                 .executor(new GameModeCommandExecutor())

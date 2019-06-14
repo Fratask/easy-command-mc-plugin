@@ -45,5 +45,6 @@ public class GameModeCommandExecutor implements CommandExecutor {
                 player.offer(Keys.GAME_MODE, GameModes.SPECTATOR);
                 break;
         }
+        logger.info("Player changed gameMode to " + player.get(Keys.GAME_MODE).get().toString());
     }
 }
