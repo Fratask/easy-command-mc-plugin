@@ -11,6 +11,8 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.gamemode.GameMode;
 import org.spongepowered.api.entity.living.player.gamemode.GameModes;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
 
 
@@ -24,8 +26,10 @@ public class GameModeCommandExecutor implements CommandExecutor {
         if (args.hasAny("player")){
             Player player = (Player) args.getOne("player").get();
             changeGameMode(player, gameMode);
+            player.sendMessage(Text.of(TextColors.YELLOW, "Your gameMode %s now!", player.get(Keys.GAME_MODE).get().toString()));
         } else {
             changeGameMode((Player) src, gameMode);
+            src.sendMessage(Text.of(TextColors.YELLOW, "Your gameMode %s now!", ((Player) src).get(Keys.GAME_MODE).get().toString()));
         }
         return CommandResult.success();
     }

@@ -9,7 +9,6 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.format.TextColors;
 import ru.fratask.mc.plugin.easycommands.executors.GameModeCommandExecutor;
 import ru.fratask.mc.plugin.easycommands.executors.VanishCommandExecutor;
 
