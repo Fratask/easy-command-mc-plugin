@@ -9,6 +9,8 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
+import ru.fratask.mc.plugin.easycommands.executors.GameModeCommandExecutor;
 import ru.fratask.mc.plugin.easycommands.executors.VanishCommandExecutor;
 
 import java.util.HashMap;
@@ -26,15 +28,28 @@ public class EasyCommandsPlugin {
 
     @Listener
     public void onServerStart(GameInitializationEvent event){
+        instance = this;
         logger.info("EasyCommands plugin is loaded");
 
         Sponge.getCommandManager().register(instance, getVanishCommand(), "vanish");
+        Sponge.getCommandManager().register(instance, getGameModeCommand(), "gm", "gamemode");
     }
 
     private CommandSpec getVanishCommand(){
         return CommandSpec.builder()
-                .description(Text.of("Turns your visible for players"))
+                .description(Text.of("Turns on/off your visible for players"))
                 .executor(new VanishCommandExecutor())
+                .build();
+    }
+
+    private CommandSpec getGameModeCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("Setup gameMode"))
+                .arguments(
+                        GenericArguments.optional(GenericArguments.player(Text.of("player"))),
+                        GenericArguments.onlyOne(GenericArguments.integer(Text.of("gameMode")))
+                        )
+                .executor(new GameModeCommandExecutor())
                 .build();
     }
 
