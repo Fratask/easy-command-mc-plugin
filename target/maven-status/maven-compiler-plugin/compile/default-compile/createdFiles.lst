@@ -1,4 +1,7 @@
-ru\fratask\mc\plugin\easycommands\executors\VanishCommandExecutor.class
-ru\fratask\mc\plugin\easycommands\EasyCommandsPlugin.class
-ru\fratask\mc\plugin\easycommands\executors\GameModeCommandExecutor.class
+ru/fratask/mc/plugin/easycommands/EasyCommandsPlugin.class
+ru/fratask/mc/plugin/easycommands/executors/SetHomeCommandExecutor.class
+ru/fratask/mc/plugin/easycommands/Home.class
+ru/fratask/mc/plugin/easycommands/executors/GameModeCommandExecutor.class
+ru/fratask/mc/plugin/easycommands/executors/VanishCommandExecutor.class
 mcmod.info
+ru/fratask/mc/plugin/easycommands/executors/HomeCommandExecutor.class

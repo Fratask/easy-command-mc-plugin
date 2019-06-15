@@ -10,10 +10,12 @@ import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
 import ru.fratask.mc.plugin.easycommands.executors.GameModeCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.HomeCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.SetHomeCommandExecutor;
 import ru.fratask.mc.plugin.easycommands.executors.VanishCommandExecutor;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 @Plugin(id = "easy-commands")
 public class EasyCommandsPlugin {
@@ -21,9 +23,9 @@ public class EasyCommandsPlugin {
     @Inject
     private Logger logger;
 
-    private static EasyCommandsPlugin instance;
+    private Set<Home> homeSet = new HashSet<>();
 
-    private Map<String, Boolean> playerHasVanish = new HashMap<String, Boolean>();
+    private static EasyCommandsPlugin instance;
 
     @Listener
     public void onServerStart(GameInitializationEvent event){
@@ -32,6 +34,8 @@ public class EasyCommandsPlugin {
 
         Sponge.getCommandManager().register(instance, getVanishCommand(), "vanish");
         Sponge.getCommandManager().register(instance, getGameModeCommand(), "gm", "gamemode");
+        Sponge.getCommandManager().register(instance, getHomeCommand(), "home");
+        Sponge.getCommandManager().register(instance, getSetHomeCommand(), "sethome");
     }
 
     private CommandSpec getVanishCommand(){
@@ -41,13 +45,33 @@ public class EasyCommandsPlugin {
                 .build();
     }
 
+    private CommandSpec getHomeCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You can teleport to home"))
+                .arguments(
+                        GenericArguments.optionalWeak(GenericArguments.string(Text.of("home")))
+                )
+                .executor(new HomeCommandExecutor())
+                .build();
+    }
+
+    private CommandSpec getSetHomeCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You can create home"))
+                .arguments(
+                        GenericArguments.optionalWeak(GenericArguments.string(Text.of("home")))
+                )
+                .executor(new SetHomeCommandExecutor())
+                .build();
+    }
+
     private CommandSpec getGameModeCommand(){
         return CommandSpec.builder()
                 .description(Text.of("Setup gameMode"))
                 .arguments(
                         GenericArguments.optionalWeak(GenericArguments.player(Text.of("player"))),
                         GenericArguments.onlyOne(GenericArguments.integer(Text.of("gameMode")))
-                        )
+                )
                 .executor(new GameModeCommandExecutor())
                 .build();
     }
@@ -63,7 +87,7 @@ public class EasyCommandsPlugin {
         return instance;
     }
 
-    public Map<String, Boolean> getPlayerHasVanish() {
-        return playerHasVanish;
+    public Set<Home> getHomeSet() {
+        return homeSet;
     }
 }
