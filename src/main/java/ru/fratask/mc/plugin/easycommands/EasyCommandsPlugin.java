@@ -32,6 +32,7 @@ public class EasyCommandsPlugin {
         Sponge.getCommandManager().register(instance, getVanishCommand(), "vanish");
         Sponge.getCommandManager().register(instance, getGameModeCommand(), "gm", "gamemode");
         Sponge.getCommandManager().register(instance, getHomeCommand(), "home");
+        Sponge.getCommandManager().register(instance, getDeleteHomeCommand(), "deletehome");
         Sponge.getCommandManager().register(instance, getSetHomeCommand(), "sethome");
         Sponge.getCommandManager().register(instance, getSpawnCommand(), "spawn");
     }
@@ -57,6 +58,16 @@ public class EasyCommandsPlugin {
                         GenericArguments.optionalWeak(GenericArguments.string(Text.of("home")))
                 )
                 .executor(new HomeCommandExecutor())
+                .build();
+    }
+
+    private CommandSpec getDeleteHomeCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You can teleport to home"))
+                .arguments(
+                        GenericArguments.optionalWeak(GenericArguments.string(Text.of("home")))
+                )
+                .executor(new DeleteHomeCommandExecutor())
                 .build();
     }
 

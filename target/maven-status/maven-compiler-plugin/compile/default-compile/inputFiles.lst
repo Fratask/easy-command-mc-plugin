@@ -1,6 +1,7 @@
 /home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/Home.java
 /home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/VanishCommandExecutor.java
 /home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/SetHomeCommandExecutor.java
+/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/DeleteHomeCommandExecutor.java
 /home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/GameModeCommandExecutor.java
 /home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/SpawnCommandExecutor.java
 /home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/EasyCommandsPlugin.java
