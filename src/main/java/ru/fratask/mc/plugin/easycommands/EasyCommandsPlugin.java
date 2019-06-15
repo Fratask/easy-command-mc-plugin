@@ -9,10 +9,7 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
-import ru.fratask.mc.plugin.easycommands.executors.GameModeCommandExecutor;
-import ru.fratask.mc.plugin.easycommands.executors.HomeCommandExecutor;
-import ru.fratask.mc.plugin.easycommands.executors.SetHomeCommandExecutor;
-import ru.fratask.mc.plugin.easycommands.executors.VanishCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,12 +33,20 @@ public class EasyCommandsPlugin {
         Sponge.getCommandManager().register(instance, getGameModeCommand(), "gm", "gamemode");
         Sponge.getCommandManager().register(instance, getHomeCommand(), "home");
         Sponge.getCommandManager().register(instance, getSetHomeCommand(), "sethome");
+        Sponge.getCommandManager().register(instance, getSpawnCommand(), "spawn");
     }
 
     private CommandSpec getVanishCommand(){
         return CommandSpec.builder()
                 .description(Text.of("Turns on/off your visible for players"))
                 .executor(new VanishCommandExecutor())
+                .build();
+    }
+
+    private CommandSpec getSpawnCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("Teleporting you to spawn point!"))
+                .executor(new SpawnCommandExecutor())
                 .build();
     }
 
