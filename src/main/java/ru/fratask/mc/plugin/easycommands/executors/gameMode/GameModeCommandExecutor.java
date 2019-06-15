@@ -1,4 +1,4 @@
-package ru.fratask.mc.plugin.easycommands.executors;
+package ru.fratask.mc.plugin.easycommands.executors.gameMode;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.command.CommandException;

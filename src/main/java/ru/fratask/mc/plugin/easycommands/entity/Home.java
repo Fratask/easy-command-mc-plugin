@@ -1,4 +1,4 @@
-package ru.fratask.mc.plugin.easycommands;
+package ru.fratask.mc.plugin.easycommands.entity;
 
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.world.Location;
@@ -10,9 +10,9 @@ public class Home {
     private Location<World> loc;
     private Player owner;
 
-    public Home(Player owner, String HomeName, Location<World> loc) {
+    public Home(Player owner, String homeName, Location<World> loc) {
         this.owner = owner;
-        this.name = HomeName;
+        this.name = homeName;
         this.loc = loc;
     }
 

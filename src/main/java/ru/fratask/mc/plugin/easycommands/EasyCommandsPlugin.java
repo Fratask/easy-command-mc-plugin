@@ -9,7 +9,19 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
-import ru.fratask.mc.plugin.easycommands.executors.*;
+import ru.fratask.mc.plugin.easycommands.entity.Home;
+import ru.fratask.mc.plugin.easycommands.entity.Warp;
+import ru.fratask.mc.plugin.easycommands.executors.gameMode.GameModeCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.home.DeleteHomeCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.home.HomeCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.home.HomeListCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.home.SetHomeCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.spawn.SpawnCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.vanish.VanishCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.warp.DeleteWarpCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.warp.SetWarpCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.warp.WarpCommandExecutor;
+import ru.fratask.mc.plugin.easycommands.executors.warp.WarpListCommandExecutor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +33,7 @@ public class EasyCommandsPlugin {
     private Logger logger;
 
     private Set<Home> homeSet = new HashSet<>();
+    private Set<Warp> warpSet = new HashSet<>();
 
     private static EasyCommandsPlugin instance;
 
@@ -30,10 +43,19 @@ public class EasyCommandsPlugin {
         logger.info("EasyCommands plugin is loaded");
 
         Sponge.getCommandManager().register(instance, getVanishCommand(), "vanish");
+
         Sponge.getCommandManager().register(instance, getGameModeCommand(), "gm", "gamemode");
+
         Sponge.getCommandManager().register(instance, getHomeCommand(), "home");
         Sponge.getCommandManager().register(instance, getDeleteHomeCommand(), "deletehome");
         Sponge.getCommandManager().register(instance, getSetHomeCommand(), "sethome");
+        Sponge.getCommandManager().register(instance, getHomeListCommand(), "homelist");
+
+        Sponge.getCommandManager().register(instance, getWarpCommand(), "warp");
+        Sponge.getCommandManager().register(instance, getDeleteWarpCommand(), "deletewarp");
+        Sponge.getCommandManager().register(instance, getSetWarpCommand(), "setwarp");
+        Sponge.getCommandManager().register(instance, getWarpListCommand(), "warplist");
+
         Sponge.getCommandManager().register(instance, getSpawnCommand(), "spawn");
     }
 
@@ -63,7 +85,7 @@ public class EasyCommandsPlugin {
 
     private CommandSpec getDeleteHomeCommand(){
         return CommandSpec.builder()
-                .description(Text.of("You can teleport to home"))
+                .description(Text.of("You can delete home"))
                 .arguments(
                         GenericArguments.optionalWeak(GenericArguments.string(Text.of("home")))
                 )
@@ -78,6 +100,50 @@ public class EasyCommandsPlugin {
                         GenericArguments.optionalWeak(GenericArguments.string(Text.of("home")))
                 )
                 .executor(new SetHomeCommandExecutor())
+                .build();
+    }
+
+    private CommandSpec getHomeListCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You see your homes"))
+                .executor(new HomeListCommandExecutor())
+                .build();
+    }
+
+    private CommandSpec getWarpCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You can teleport to warp"))
+                .arguments(
+                        GenericArguments.onlyOne(GenericArguments.string(Text.of("warp")))
+                )
+                .executor(new WarpCommandExecutor())
+                .build();
+    }
+
+    private CommandSpec getDeleteWarpCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You can delete warp"))
+                .arguments(
+                        GenericArguments.onlyOne(GenericArguments.string(Text.of("warp")))
+                )
+                .executor(new DeleteWarpCommandExecutor())
+                .build();
+    }
+
+    private CommandSpec getSetWarpCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You can create warp"))
+                .arguments(
+                        GenericArguments.onlyOne(GenericArguments.string(Text.of("warp")))
+                )
+                .executor(new SetWarpCommandExecutor())
+                .build();
+    }
+
+    private CommandSpec getWarpListCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You can see existing warps"))
+                .executor(new WarpListCommandExecutor())
                 .build();
     }
 
@@ -105,5 +171,9 @@ public class EasyCommandsPlugin {
 
     public Set<Home> getHomeSet() {
         return homeSet;
+    }
+
+    public Set<Warp> getWarpSet() {
+        return warpSet;
     }
 }

@@ -1,6 +1,7 @@
-package ru.fratask.mc.plugin.easycommands.executors;
+package ru.fratask.mc.plugin.easycommands.executors.home;
 
 import org.slf4j.Logger;
+import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
@@ -9,46 +10,46 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
-import ru.fratask.mc.plugin.easycommands.Home;
+import ru.fratask.mc.plugin.easycommands.entity.Home;
 
 import java.util.Set;
 
-public class DeleteHomeCommandExecutor implements CommandExecutor {
+public class HomeCommandExecutor implements CommandExecutor {
 
     private Logger logger = EasyCommandsPlugin.getInstance().getLogger();
 
     @Override
-    public CommandResult execute(CommandSource src, CommandContext args) {
+    public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if (args.hasAny("home")) {
             Player owner = (Player) src;
             String homeName = (String) args.getOne("home").get();
             Set<Home> homeSet = EasyCommandsPlugin.getInstance().getHomeSet();
-            boolean deleted = false;
+            boolean teleported = false;
             for (Home home: homeSet){
                 if (home.getName().equals(homeName) && home.getOwner().getName().equals(owner.getName())){
-                    homeSet.remove(home);
-                    logger.info("Player " + src + " deleted home [homeName]: " + home.getName());
-                    deleted = true;
-                    src.sendMessage(Text.of(TextColors.YELLOW, "You deleted home: " + homeName + "!"));
+                    ((Player) src).setLocation(home.getLoc());
+                    logger.info("Player " + src + " teleported to home [homeName]: " + home.getName() + " [homeLocation]: " + home.getLoc());
+                    teleported = true;
+                    src.sendMessage(Text.of(TextColors.YELLOW, "You teleported to " + homeName + "!"));
                 }
             }
-            if (!deleted){
+            if (!teleported){
                 src.sendMessage(Text.of(TextColors.YELLOW, "You don't have home with this name!"));
             }
         } else {
             Player owner = (Player) src;
-            String homeName = " ";
+            String homeName = "default";
             Set<Home> homeSet = EasyCommandsPlugin.getInstance().getHomeSet();
-            boolean deleted = false;
+            boolean teleported = false;
             for (Home home: homeSet){
                 if (home.getName().equals(homeName) && home.getOwner().getName().equals(owner.getName())){
-                    homeSet.remove(home);
-                    logger.info("Player " + src + " deleted home [homeName]: default");
-                    deleted = true;
-                    src.sendMessage(Text.of(TextColors.YELLOW, "You deleted default home"));
+                    ((Player) src).setLocation(home.getLoc());
+                    logger.info("Player " + src + " teleported to home [homeName]: default [homeLocation]: " + home.getLoc());
+                    teleported = true;
+                    src.sendMessage(Text.of(TextColors.YELLOW, "You teleported to default home"));
                 }
             }
-            if (!deleted){
+            if (!teleported){
                 src.sendMessage(Text.of(TextColors.YELLOW, "You don't have home with this name!"));
             }
         }
