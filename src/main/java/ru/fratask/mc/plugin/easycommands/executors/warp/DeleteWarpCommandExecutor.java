@@ -32,7 +32,7 @@ public class DeleteWarpCommandExecutor implements CommandExecutor {
             }
         }
         if (!deleted){
-            src.sendMessage(Text.of(TextColors.YELLOW, "Warp with this name doesn't exist!"));
+            src.sendMessage(Text.of(TextColors.RED, "Warp with this name doesn't exist!"));
         }
         return CommandResult.success();
     }

@@ -23,22 +23,13 @@ public class SetHomeCommandExecutor implements CommandExecutor {
         Set<Home> homeSet = new HashSet<>();
         if (args.hasAny("home")){
             String homeName = (String) args.getOne("home").get();
-            for (Home home: homeSet){
-                if (home.getName().equals(homeName) && home.getOwner().equals(src)){
-                    homeSet.remove(home);
-                }
-            }
-            EasyCommandsPlugin.getInstance().getHomeSet().add(new Home((Player) src, homeName, ((Player) src).getLocation()));
-            logger.info("Player " + src.getName() + " set home at " + ((Player) src).getLocation());
+            EasyCommandsPlugin.getInstance().getHomeTable().put((Player) src, homeName, new Home((Player) src, homeName, ((Player) src).getLocation()));
+            logger.info("Player " + src.getName() + " set home " + homeName + " at " + ((Player) src).getLocation());
             src.sendMessage(Text.of(TextColors.YELLOW, "You set home " + homeName));
         } else {
-            for (Home home: homeSet){
-                if (home.getName().equals("default") && home.getOwner().equals(src)){
-                    homeSet.remove(home);
-                }
-            }
-            EasyCommandsPlugin.getInstance().getHomeSet().add(new Home((Player) src, "default", ((Player) src).getLocation()));
-            logger.info("Player " + src.getName() + " set home at " + ((Player) src).getPosition());
+            String homeName = "default";
+            EasyCommandsPlugin.getInstance().getHomeTable().put((Player) src, homeName, new Home((Player) src, homeName, ((Player) src).getLocation()));
+            logger.info("Player " + src.getName() + " set home " + homeName + " at " + ((Player) src).getLocation());
             src.sendMessage(Text.of(TextColors.YELLOW, "You set default home!"));
         }
         return CommandResult.success();

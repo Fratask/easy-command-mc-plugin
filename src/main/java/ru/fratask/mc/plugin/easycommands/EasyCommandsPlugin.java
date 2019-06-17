@@ -1,10 +1,14 @@
 package ru.fratask.mc.plugin.easycommands;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+import com.google.common.collect.Tables;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
@@ -32,7 +36,7 @@ public class EasyCommandsPlugin {
     @Inject
     private Logger logger;
 
-    private Set<Home> homeSet = new HashSet<>();
+    private Table<Player, String, Home> homeTable = HashBasedTable.create();
     private Set<Warp> warpSet = new HashSet<>();
 
     private static EasyCommandsPlugin instance;
@@ -169,8 +173,8 @@ public class EasyCommandsPlugin {
         return instance;
     }
 
-    public Set<Home> getHomeSet() {
-        return homeSet;
+    public Table<Player, String, Home> getHomeTable() {
+        return homeTable;
     }
 
     public Set<Warp> getWarpSet() {

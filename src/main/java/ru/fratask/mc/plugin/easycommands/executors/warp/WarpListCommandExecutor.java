@@ -17,7 +17,7 @@ public class WarpListCommandExecutor implements CommandExecutor {
     public CommandResult execute(CommandSource src, CommandContext args) {
         Set<Warp> warpSet = EasyCommandsPlugin.getInstance().getWarpSet();
         if (warpSet.size() == 0) {
-            src.sendMessage(Text.of(TextColors.YELLOW, "Warps don't exist"));
+            src.sendMessage(Text.of(TextColors.RED, "Warps don't exist"));
         } else {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("Warps [" + warpSet.size() + "]:");

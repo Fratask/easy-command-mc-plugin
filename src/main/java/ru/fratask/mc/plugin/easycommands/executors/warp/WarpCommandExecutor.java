@@ -33,7 +33,7 @@ public class WarpCommandExecutor implements CommandExecutor {
             }
         }
         if (!teleported){
-            src.sendMessage(Text.of(TextColors.YELLOW, "Warp with this name doesn't exist!"));
+            src.sendMessage(Text.of(TextColors.RED, "Warp with this name doesn't exist!"));
         }
         return CommandResult.success();
     }

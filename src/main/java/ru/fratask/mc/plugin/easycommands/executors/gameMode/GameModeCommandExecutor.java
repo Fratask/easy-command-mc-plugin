@@ -26,10 +26,10 @@ public class GameModeCommandExecutor implements CommandExecutor {
         if (args.hasAny("player")){
             Player player = (Player) args.getOne("player").get();
             changeGameMode(player, gameMode);
-            player.sendMessage(Text.of(TextColors.YELLOW, "Your gameMode %s now!", player.get(Keys.GAME_MODE).get().toString()));
+            player.sendMessage(Text.of(TextColors.YELLOW, "Your gameMode: ", player.get(Keys.GAME_MODE).get().toString()));
         } else {
             changeGameMode((Player) src, gameMode);
-            src.sendMessage(Text.of(TextColors.YELLOW, "Your gameMode %s now!", ((Player) src).get(Keys.GAME_MODE).get().toString()));
+            src.sendMessage(Text.of(TextColors.YELLOW, "Your gameMode: ", ((Player) src).get(Keys.GAME_MODE).get().toString()));
         }
         return CommandResult.success();
     }
