@@ -1,3 +1,4 @@
 ru/fratask/mc/plugin/easycommands/EasyCommandsPlugin.class
+ru/fratask/mc/plugin/easycommands/executors/GameModeCommandExecutor.class
 mcmod.info
 ru/fratask/mc/plugin/easycommands/executors/VanishCommandExecutor.class
