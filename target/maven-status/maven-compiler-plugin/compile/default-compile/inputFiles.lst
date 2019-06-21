@@ -1,20 +1,17 @@
-<<<<<<< HEAD
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/dao/home/HomeDAOImpl.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/spawn/SpawnCommandExecutor.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/dao/home/IHomeDAO.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/entity/Home.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/home/HomeListCommandExecutor.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/home/SetHomeCommandExecutor.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/warp/WarpListCommandExecutor.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/warp/DeleteWarpCommandExecutor.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/vanish/VanishCommandExecutor.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/gameMode/GameModeCommandExecutor.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/home/HomeCommandExecutor.java
 /home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/EasyCommandsPlugin.java
-/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/GameModeCommandExecutor.java
-/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/VanishCommandExecutor.java
-=======
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/warp/WarpCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/home/SetHomeCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/home/DeleteHomeCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/home/HomeListCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/home/HomeCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/gameMode/GameModeCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/entity/Warp.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/vanish/VanishCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/warp/WarpListCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/EasyCommandsPlugin.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/warp/DeleteWarpCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/spawn/SpawnCommandExecutor.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/entity/Home.java
-/home/amir/Documents/IdeaProjects/easy-command-mc-plugin/src/main/java/ru/fratask/mc/plugin/easycommands/executors/warp/SetWarpCommandExecutor.java
->>>>>>> c558d8e8c0332a6f18bfbc03a4e15cddf95c6aad
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/warp/WarpCommandExecutor.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/dao/DataSource.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/warp/SetWarpCommandExecutor.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/entity/Warp.java
+/home/amir/IdeaProjects/easy-commands/src/main/java/ru/fratask/mc/plugin/easycommands/executors/home/DeleteHomeCommandExecutor.java

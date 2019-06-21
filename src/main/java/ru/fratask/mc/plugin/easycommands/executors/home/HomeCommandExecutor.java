@@ -14,6 +14,7 @@ import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
 import ru.fratask.mc.plugin.easycommands.entity.Home;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class HomeCommandExecutor implements CommandExecutor {
 
@@ -21,28 +22,25 @@ public class HomeCommandExecutor implements CommandExecutor {
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-        if (args.hasAny("home")) {
-            Player owner = (Player) src;
-            String homeName = (String) args.getOne("home").get();
-            Table<Player, String, Home> homeTable = EasyCommandsPlugin.getInstance().getHomeTable();
-            if (!homeTable.contains(owner, homeName)){
+        if (src instanceof Player) {
+            Player owner = ((Player) src);
+            UUID uuid = owner.getUniqueId();
+            Table<UUID, String, Home> homeTable = EasyCommandsPlugin.getInstance().getHomeTable();
+            String homeName;
+            if (args.hasAny("home")) {
+                homeName = (String) args.getOne("home").get();
+            } else {
+                homeName = "default";
+            }
+            if (!homeTable.contains(uuid, homeName)) {
                 owner.sendMessage(Text.of(TextColors.RED, "You don't have home with this name!"));
-            } else{
-                owner.setLocation(homeTable.get(owner, homeName).getLoc());
+            } else {
+                owner.setLocation(homeTable.get(uuid, homeName).getLoc());
                 owner.sendMessage(Text.of(TextColors.YELLOW, "You teleported to home!"));
-                logger.info("Player " + owner.getName() + " teleported to home: " + homeTable.get(owner, homeName).toString());
+                logger.info("Player " + owner.getName() + " teleported to home: " + homeTable.get(uuid, homeName).toString());
             }
         } else {
-            Player owner = (Player) src;
-            String homeName = "default";
-            Table<Player, String, Home> homeTable = EasyCommandsPlugin.getInstance().getHomeTable();
-            if (!homeTable.contains(owner, homeName)){
-                owner.sendMessage(Text.of(TextColors.RED, "You don't have home with this name!"));
-            } else{
-                owner.setLocation(homeTable.get(owner, homeName).getLoc());
-                owner.sendMessage(Text.of(TextColors.YELLOW, "You teleported to home!"));
-                logger.info("Player " + owner.getName() + " teleported to home: " + homeTable.get(owner, homeName).toString());
-            }
+            src.sendMessage(Text.of(TextColors.RED, "You must be Player to using home commands!"));
         }
         return CommandResult.success();
     }

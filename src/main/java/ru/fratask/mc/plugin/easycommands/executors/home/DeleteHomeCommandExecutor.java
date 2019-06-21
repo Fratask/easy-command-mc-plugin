@@ -12,34 +12,33 @@ import org.spongepowered.api.text.format.TextColors;
 import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
 import ru.fratask.mc.plugin.easycommands.entity.Home;
 
+import java.util.UUID;
+
 public class DeleteHomeCommandExecutor implements CommandExecutor {
 
     private Logger logger = EasyCommandsPlugin.getInstance().getLogger();
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) {
-        if (args.hasAny("home")) {
+        if (src instanceof Player) {
             Player owner = (Player) src;
-            String homeName = (String) args.getOne("home").get();
-            Table<Player, String, Home> homeTable = EasyCommandsPlugin.getInstance().getHomeTable();
-            if (!homeTable.contains(owner, homeName)){
+            UUID uuid = owner.getUniqueId();
+            String homeName;
+            Table<UUID, String, Home> homeTable = EasyCommandsPlugin.getInstance().getHomeTable();
+            if (args.hasAny("home")) {
+                homeName = (String) args.getOne("home").get();
+            } else {
+                homeName = "default";
+            }
+            if (!homeTable.contains(uuid, homeName)) {
                 owner.sendMessage(Text.of(TextColors.RED, "You don't have home with this name!"));
-            } else{
-                homeTable.remove(owner, homeName);
+            } else {
+                homeTable.remove(uuid, homeName);
                 owner.sendMessage(Text.of(TextColors.YELLOW, "Home deleted!"));
                 logger.info("Player " + owner.getName() + " removed " + homeName + " home!");
             }
         } else {
-            Player owner = (Player) src;
-            String homeName = "default";
-            Table<Player, String, Home> homeTable = EasyCommandsPlugin.getInstance().getHomeTable();
-            if (!homeTable.contains(owner, homeName)){
-                owner.sendMessage(Text.of(TextColors.RED, "You don't have home with this name!"));
-            } else{
-                homeTable.remove(owner, homeName);
-                owner.sendMessage(Text.of(TextColors.YELLOW, "Home deleted!"));
-                logger.info("Player " + owner.getName() + " removed " + homeName + " home!");
-            }
+            src.sendMessage(Text.of(TextColors.RED, "You must be Player to using home commands!"));
         }
         return CommandResult.success();
     }
