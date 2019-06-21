@@ -1,25 +1,23 @@
-package ru.fratask.mc.plugin.easycommands.dao.home;
+package ru.fratask.mc.plugin.easycommands.dao.warp;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.service.user.UserStorageService;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 import ru.fratask.mc.plugin.easycommands.dao.DataSource;
-import ru.fratask.mc.plugin.easycommands.entity.Home;
+import ru.fratask.mc.plugin.easycommands.entity.Warp;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-public class HomeDAOImpl implements IHomeDAO{
+public class WarpDAOImpl implements IWarpDAO {
 
     private DataSource dataSource = DataSource.getInstance();
 
 
     @Override
-    public List<Home> findAll() {
-        List<Home> result = new ArrayList<Home>();
+    public Set<Warp> findAll() {
+        Set<Warp> result = new HashSet<>();
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
@@ -27,12 +25,12 @@ public class HomeDAOImpl implements IHomeDAO{
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 UserStorageService userStorageService = Sponge.getServiceManager().provide(UserStorageService.class).get();
-                Long id = rs.getLong(Home.ID_COLUMN);
-                String name = rs.getString(Home.NAME_COLUMN);
-                Location<World> loc = new Location<World>(Sponge.getServer().getWorld("world").get(), rs.getDouble(Home.XCOORD_COLUMN), rs.getDouble(Home.YCOORD_COLUMN), rs.getDouble(Home.ZCOORD_COLUMN));
-                UUID owner = userStorageService.get(UUID.fromString(rs.getString(Home.OWNER_COLUMN))).get().getUniqueId();
-                Home home = new Home(id, name, loc, owner);
-                result.add(home);
+                Long id = rs.getLong(Warp.ID_COLUMN);
+                String name = rs.getString(Warp.NAME_COLUMN);
+                Location<World> loc = new Location<World>(Sponge.getServer().getWorld("world").get(), rs.getDouble(Warp.XCOORD_COLUMN), rs.getDouble(Warp.YCOORD_COLUMN), rs.getDouble(Warp.ZCOORD_COLUMN));
+                UUID owner = userStorageService.get(UUID.fromString(rs.getString(Warp.OWNER_COLUMN))).get().getUniqueId();
+                Warp warp = new Warp(id, name, loc, owner);
+                result.add(warp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,21 +63,21 @@ public class HomeDAOImpl implements IHomeDAO{
     }
 
     @Override
-    public void insert(Home home) {
+    public void insert(Warp warp) {
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, home.getName());
-            statement.setString(2, String.valueOf(home.getLoc().getBlockX()));
-            statement.setString(3, String.valueOf(home.getLoc().getBlockY()));
-            statement.setString(4, String.valueOf(home.getLoc().getBlockZ()));
-            statement.setString(5, String.valueOf(home.getOwner()));
+            statement.setString(1, warp.getName());
+            statement.setString(2, String.valueOf(warp.getLoc().getBlockX()));
+            statement.setString(3, String.valueOf(warp.getLoc().getBlockY()));
+            statement.setString(4, String.valueOf(warp.getLoc().getBlockZ()));
+            statement.setString(5, String.valueOf(warp.getOwner()));
             statement.execute();
 
             ResultSet generatedkeys = statement.getGeneratedKeys();
             if (generatedkeys.next()) {
-                home.setId(generatedkeys.getLong(1));
+                warp.setId(generatedkeys.getLong(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,17 +92,17 @@ public class HomeDAOImpl implements IHomeDAO{
     }
 
     @Override
-    public void update(Home home) {
+    public void update(Warp warp) {
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
-            statement.setString(1, home.getName());
-            statement.setString(2, String.valueOf(home.getLoc().getBlockX()));
-            statement.setString(3, String.valueOf(home.getLoc().getBlockY()));
-            statement.setString(4, String.valueOf(home.getLoc().getBlockZ()));
-            statement.setString(5, String.valueOf(home.getOwner()));
-            statement.setLong(6, home.getId());
+            statement.setString(1, warp.getName());
+            statement.setString(2, String.valueOf(warp.getLoc().getBlockX()));
+            statement.setString(3, String.valueOf(warp.getLoc().getBlockY()));
+            statement.setString(4, String.valueOf(warp.getLoc().getBlockZ()));
+            statement.setString(5, String.valueOf(warp.getOwner()));
+            statement.setLong(6, warp.getId());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,12 +116,12 @@ public class HomeDAOImpl implements IHomeDAO{
     }
 
     @Override
-    public void delete(Home home) {
+    public void delete(Warp warp) {
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(SQL_DELETE);
-            statement.setLong(1, home.getId());
+            statement.setLong(1, warp.getId());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

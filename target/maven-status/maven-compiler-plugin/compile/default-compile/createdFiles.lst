@@ -4,6 +4,8 @@ ru/fratask/mc/plugin/easycommands/executors/warp/SetWarpCommandExecutor.class
 ru/fratask/mc/plugin/easycommands/executors/warp/WarpListCommandExecutor.class
 ru/fratask/mc/plugin/easycommands/executors/home/DeleteHomeCommandExecutor.class
 ru/fratask/mc/plugin/easycommands/dao/home/HomeDAOImpl.class
+ru/fratask/mc/plugin/easycommands/dao/warp/IWarpDAO.class
+ru/fratask/mc/plugin/easycommands/dao/warp/WarpDAOImpl.class
 ru/fratask/mc/plugin/easycommands/executors/home/HomeListCommandExecutor.class
 ru/fratask/mc/plugin/easycommands/executors/warp/DeleteWarpCommandExecutor.class
 ru/fratask/mc/plugin/easycommands/executors/home/HomeCommandExecutor.class

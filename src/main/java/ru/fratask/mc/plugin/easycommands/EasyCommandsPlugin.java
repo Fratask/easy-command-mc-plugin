@@ -19,6 +19,7 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
 import ru.fratask.mc.plugin.easycommands.dao.DataSource;
 import ru.fratask.mc.plugin.easycommands.dao.home.HomeDAOImpl;
+import ru.fratask.mc.plugin.easycommands.dao.warp.WarpDAOImpl;
 import ru.fratask.mc.plugin.easycommands.entity.Home;
 import ru.fratask.mc.plugin.easycommands.entity.Warp;
 import ru.fratask.mc.plugin.easycommands.executors.gameMode.GameModeCommandExecutor;
@@ -47,6 +48,7 @@ public class EasyCommandsPlugin {
     private static EasyCommandsPlugin instance;
 
     private static HomeDAOImpl homeDAO = new HomeDAOImpl();
+    private static WarpDAOImpl warpDAO = new WarpDAOImpl();
 
     @Listener
     public void onServerStart(GameInitializationEvent event){
@@ -77,11 +79,13 @@ public class EasyCommandsPlugin {
         dataSource.setLogin("fratask");
         dataSource.setPassword("Forwolk95!");
         initHomes();
+        initWarps();
     }
 
     @Listener
     public void onWorldSave(GameStoppedServerEvent event){
         uploadHomes();
+        uploadWarps();
     }
 
     private CommandSpec getVanishCommand(){
@@ -220,5 +224,20 @@ public class EasyCommandsPlugin {
             counter++;
         }
         EasyCommandsPlugin.getInstance().getLogger().info("Homes uploaded! [" + counter + "];");
+    }
+
+    private void initWarps() {
+        warpSet = warpDAO.findAll();
+        EasyCommandsPlugin.getInstance().getLogger().info("Warps initilized! [" + warpSet.size() + "];");
+    }
+
+    private void uploadWarps(){
+        int counter = 0;
+        warpDAO.deleteALL();
+        for (Warp warp: warpSet){
+            warpDAO.insert(warp);
+            counter++;
+        }
+        EasyCommandsPlugin.getInstance().getLogger().info("Warps uploaded! [" + counter + "];");
     }
 }

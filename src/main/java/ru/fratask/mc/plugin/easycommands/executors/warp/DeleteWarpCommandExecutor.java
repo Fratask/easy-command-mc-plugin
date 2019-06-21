@@ -12,6 +12,7 @@ import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
 import ru.fratask.mc.plugin.easycommands.entity.Warp;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class DeleteWarpCommandExecutor implements CommandExecutor {
 
@@ -19,20 +20,25 @@ public class DeleteWarpCommandExecutor implements CommandExecutor {
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) {
-        Player owner = (Player) src;
-        String warpName = (String) args.getOne("warp").get();
-        Set<Warp> warpSet = EasyCommandsPlugin.getInstance().getWarpSet();
-        boolean deleted = false;
-        for (Warp warp: warpSet){
-            if (warp.getName().equals(warpName) && warp.getOwner().getName().equals(owner.getName())){
-                warpSet.remove(warp);
-                logger.info("Player " + src + " deleted warp [homeName]: " + warp.getName());
-                deleted = true;
-                src.sendMessage(Text.of(TextColors.YELLOW, "You deleted warp: " + warpName + "!"));
+        if (src instanceof Player) {
+            String warpName = (String) args.getOne("warp").get();
+            UUID owner = ((Player) src).getUniqueId();
+            Set<Warp> warpSet = EasyCommandsPlugin.getInstance().getWarpSet();
+            boolean deleted = false;
+            for (Warp warp : warpSet) {
+                if (warp.getName().equals(warpName) && warp.getOwner().equals(owner)) {
+                    warpSet.remove(warp);
+                    deleted = true;
+                    src.sendMessage(Text.of(TextColors.YELLOW, "You deleted warp: " + warpName + "!"));
+                    logger.info("Player " + src + " deleted warp [warpName]: " + warpName);
+                    break;
+                }
             }
-        }
-        if (!deleted){
-            src.sendMessage(Text.of(TextColors.RED, "Warp with this name doesn't exist!"));
+            if (!deleted) {
+                src.sendMessage(Text.of(TextColors.RED, "Warp with this name doesn't exist!"));
+            }
+        } else {
+            src.sendMessage(Text.of(TextColors.RED, "You must be Player to using warp commands!"));
         }
         return CommandResult.success();
     }

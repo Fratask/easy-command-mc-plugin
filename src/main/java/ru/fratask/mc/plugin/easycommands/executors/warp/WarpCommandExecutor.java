@@ -13,6 +13,7 @@ import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
 import ru.fratask.mc.plugin.easycommands.entity.Warp;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class WarpCommandExecutor implements CommandExecutor {
 
@@ -20,20 +21,26 @@ public class WarpCommandExecutor implements CommandExecutor {
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-        Player owner = (Player) src;
-        String warpName = (String) args.getOne("warp").get();
-        Set<Warp> warpSet = EasyCommandsPlugin.getInstance().getWarpSet();
-        boolean teleported = false;
-        for (Warp warp: warpSet){
-            if (warp.getName().equals(warpName) && warp.getOwner().getName().equals(owner.getName())){
-                ((Player) src).setLocation(warp.getLoc());
-                logger.info("Player " + src + " teleported to warp [homeName]: " + warp.getName() + " [homeLocation]: " + warp.getLoc());
-                teleported = true;
-                src.sendMessage(Text.of(TextColors.YELLOW, "You teleported to " + warpName + "!"));
+        if (src instanceof Player) {
+            Player player = ((Player) src);
+            UUID uuid = player.getUniqueId();
+            String warpName = (String) args.getOne("warp").get();
+            Set<Warp> warpSet = EasyCommandsPlugin.getInstance().getWarpSet();
+            Warp targetWarp = null;
+            for (Warp warp: warpSet){
+                if (warp.getName().equals(warpName)){
+                    targetWarp = warp;
+                }
             }
-        }
-        if (!teleported){
-            src.sendMessage(Text.of(TextColors.RED, "Warp with this name doesn't exist!"));
+            if (targetWarp != null) {
+                player.setLocation(targetWarp.getLoc());
+                logger.info("Player " + player + " teleported to warp: " + warpName + " Loc: " + targetWarp.getLoc());
+                src.sendMessage(Text.of(TextColors.YELLOW, "You teleported to " + warpName));
+            } else {
+                src.sendMessage(Text.of(TextColors.RED, "This warp doesn't exist!"));
+            }
+        } else {
+            src.sendMessage(Text.of(TextColors.RED, "You must be Player to using home commands!"));
         }
         return CommandResult.success();
     }
