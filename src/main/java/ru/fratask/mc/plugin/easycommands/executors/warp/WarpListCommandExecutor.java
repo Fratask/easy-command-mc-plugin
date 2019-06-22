@@ -4,6 +4,7 @@ import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
@@ -12,6 +13,13 @@ import ru.fratask.mc.plugin.easycommands.entity.Warp;
 import java.util.Set;
 
 public class WarpListCommandExecutor implements CommandExecutor {
+
+    public static CommandSpec getWarpListCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You can see existing warps"))
+                .executor(new WarpListCommandExecutor())
+                .build();
+    }
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) {

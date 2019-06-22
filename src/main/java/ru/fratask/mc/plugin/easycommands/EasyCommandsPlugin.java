@@ -53,23 +53,8 @@ public class EasyCommandsPlugin {
     @Listener
     public void onServerStart(GameInitializationEvent event){
         instance = this;
+        registerCommands();
         logger.info("EasyCommands plugin is loaded");
-
-        Sponge.getCommandManager().register(instance, getVanishCommand(), "vanish");
-
-        Sponge.getCommandManager().register(instance, getGameModeCommand(), "gm", "gamemode");
-
-        Sponge.getCommandManager().register(instance, getHomeCommand(), "home");
-        Sponge.getCommandManager().register(instance, getDeleteHomeCommand(), "deletehome");
-        Sponge.getCommandManager().register(instance, getSetHomeCommand(), "sethome");
-        Sponge.getCommandManager().register(instance, getHomeListCommand(), "homelist");
-
-        Sponge.getCommandManager().register(instance, getWarpCommand(), "warp");
-        Sponge.getCommandManager().register(instance, getDeleteWarpCommand(), "deletewarp");
-        Sponge.getCommandManager().register(instance, getSetWarpCommand(), "setwarp");
-        Sponge.getCommandManager().register(instance, getWarpListCommand(), "warplist");
-
-        Sponge.getCommandManager().register(instance, getSpawnCommand(), "spawn");
     }
 
     @Listener
@@ -86,105 +71,6 @@ public class EasyCommandsPlugin {
     public void onWorldSave(GameStoppedServerEvent event){
         uploadHomes();
         uploadWarps();
-    }
-
-    private CommandSpec getVanishCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("Turns on/off your visible for players"))
-                .executor(new VanishCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getSpawnCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("Teleporting you to spawn point!"))
-                .executor(new SpawnCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getHomeCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("You can teleport to home"))
-                .arguments(
-                        GenericArguments.optionalWeak(GenericArguments.string(Text.of("home")))
-                )
-                .executor(new HomeCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getDeleteHomeCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("You can delete home"))
-                .arguments(
-                        GenericArguments.optionalWeak(GenericArguments.string(Text.of("home")))
-                )
-                .executor(new DeleteHomeCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getSetHomeCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("You can create home"))
-                .arguments(
-                        GenericArguments.optionalWeak(GenericArguments.string(Text.of("home")))
-                )
-                .executor(new SetHomeCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getHomeListCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("You see your homes"))
-                .executor(new HomeListCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getWarpCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("You can teleport to warp"))
-                .arguments(
-                        GenericArguments.onlyOne(GenericArguments.string(Text.of("warp")))
-                )
-                .executor(new WarpCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getDeleteWarpCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("You can delete warp"))
-                .arguments(
-                        GenericArguments.onlyOne(GenericArguments.string(Text.of("warp")))
-                )
-                .executor(new DeleteWarpCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getSetWarpCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("You can create warp"))
-                .arguments(
-                        GenericArguments.onlyOne(GenericArguments.string(Text.of("warp")))
-                )
-                .executor(new SetWarpCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getWarpListCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("You can see existing warps"))
-                .executor(new WarpListCommandExecutor())
-                .build();
-    }
-
-    private CommandSpec getGameModeCommand(){
-        return CommandSpec.builder()
-                .description(Text.of("Setup gameMode"))
-                .arguments(
-                        GenericArguments.optionalWeak(GenericArguments.player(Text.of("player"))),
-                        GenericArguments.onlyOne(GenericArguments.integer(Text.of("gameMode")))
-                )
-                .executor(new GameModeCommandExecutor())
-                .build();
     }
 
     public Logger getLogger() {
@@ -239,5 +125,23 @@ public class EasyCommandsPlugin {
             counter++;
         }
         EasyCommandsPlugin.getInstance().getLogger().info("Warps uploaded! [" + counter + "];");
+    }
+
+    private void registerCommands(){
+        Sponge.getCommandManager().register(instance, VanishCommandExecutor.getVanishCommand(), "vanish");
+
+        Sponge.getCommandManager().register(instance, GameModeCommandExecutor.getGameModeCommand(), "gm", "gamemode");
+
+        Sponge.getCommandManager().register(instance, HomeCommandExecutor.getHomeCommand(), "home");
+        Sponge.getCommandManager().register(instance, DeleteHomeCommandExecutor.getDeleteHomeCommand(), "deletehome");
+        Sponge.getCommandManager().register(instance, SetHomeCommandExecutor.getSetHomeCommand(), "sethome");
+        Sponge.getCommandManager().register(instance, HomeListCommandExecutor.getHomeListCommand(), "homelist");
+
+        Sponge.getCommandManager().register(instance, WarpCommandExecutor.getWarpCommand(), "warp");
+        Sponge.getCommandManager().register(instance, DeleteWarpCommandExecutor.getDeleteWarpCommand(), "deletewarp");
+        Sponge.getCommandManager().register(instance, SetWarpCommandExecutor.getSetWarpCommand(), "setwarp");
+        Sponge.getCommandManager().register(instance, WarpListCommandExecutor.getWarpListCommand(), "warplist");
+
+        Sponge.getCommandManager().register(instance, SpawnCommandExecutor.getSpawnCommand(), "spawn");
     }
 }

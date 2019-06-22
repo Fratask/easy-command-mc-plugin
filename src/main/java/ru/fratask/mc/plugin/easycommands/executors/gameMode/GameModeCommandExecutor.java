@@ -5,7 +5,9 @@ import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
+import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.gamemode.GameModes;
@@ -17,6 +19,17 @@ import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
 public class GameModeCommandExecutor implements CommandExecutor {
 
     private Logger logger = EasyCommandsPlugin.getInstance().getLogger();
+
+    public static CommandSpec getGameModeCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("Setup gameMode"))
+                .arguments(
+                        GenericArguments.optionalWeak(GenericArguments.player(Text.of("player"))),
+                        GenericArguments.onlyOne(GenericArguments.integer(Text.of("gameMode")))
+                )
+                .executor(new GameModeCommandExecutor())
+                .build();
+    }
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {

@@ -5,6 +5,7 @@ import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
@@ -14,6 +15,13 @@ import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
 public class VanishCommandExecutor implements CommandExecutor {
 
     private Logger logger = EasyCommandsPlugin.getInstance().getLogger();
+
+    public static CommandSpec getVanishCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("Turns on/off your visible for players"))
+                .executor(new VanishCommandExecutor())
+                .build();
+    }
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) {

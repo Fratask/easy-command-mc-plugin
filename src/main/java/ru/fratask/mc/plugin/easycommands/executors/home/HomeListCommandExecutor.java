@@ -4,6 +4,7 @@ import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
@@ -11,6 +12,13 @@ import ru.fratask.mc.plugin.easycommands.EasyCommandsPlugin;
 import ru.fratask.mc.plugin.easycommands.entity.Home;
 
 public class HomeListCommandExecutor implements CommandExecutor {
+
+    public static CommandSpec getHomeListCommand(){
+        return CommandSpec.builder()
+                .description(Text.of("You see your homes"))
+                .executor(new HomeListCommandExecutor())
+                .build();
+    }
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) {
